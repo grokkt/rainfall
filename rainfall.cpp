@@ -16,7 +16,7 @@ void save_cursor_position() {
 }
 
 void restore_n_clear_cursor_pos() {
-    // Restore cursor position and clear from cursor to end of screen
+    // Restore cursor position
     std::wcout << "\033[u" << std::flush;
 }
 
@@ -45,16 +45,13 @@ void print_img(
         std::vector<int> matching_row = raindrop_matrix[x];
         // For each chacter in this_line, if matching_row[char] is 1, change that char to raindrop
         for (unsigned long int z = 0; z < this_line.length(); ++z) {
-
             if (matching_row[z] == 1) {
                 // Raindrop char
                 this_line[z] = '|';
             }
         }
-
         to_print += this_line;
         to_print += L'\n';
-
     }
 
     // Not having std::flush here caused bug for frames to not reset (grows long vertically when printing)
@@ -168,7 +165,6 @@ int main(int argc, char* argv[]) {
 
     std::string line;
     while(getline(image, line)) {
-
         //rip
         std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
         std::wstring cline = converter.from_bytes(line);
@@ -215,7 +211,7 @@ int main(int argc, char* argv[]) {
         raindrop_matrix[0][*(*res_vec)[x]] ^= 1;
     }
 
-    // loooooop
+    // loop indefinitely
     while (true) {
         // save cursor position
         save_cursor_position();
@@ -239,9 +235,7 @@ int main(int argc, char* argv[]) {
     }
 
     // add clean up
-
     return 0;
-
 }
 
 // sleep thread in ms
@@ -249,7 +243,6 @@ void sleep(long time) {
     std::chrono::milliseconds timespan(time);
     std::this_thread::sleep_for(timespan);
 }
-
 
 void deck_shift(std::deque<std::string> &deck, std::string elem) {
     deck.pop_back();
