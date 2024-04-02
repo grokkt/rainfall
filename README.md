@@ -11,3 +11,7 @@ Problems:
    - I did the handrolled RNG thinking "maybe this could be used somewhere that MT/etc. isn't possible"
  - Need to gracefully handle exiting & not rely on OS to reclaim manual allocations
  - Probably other bugs
+
+- Note you have to compile it before using it
+
+Ex: `./rainfall city.cat`
